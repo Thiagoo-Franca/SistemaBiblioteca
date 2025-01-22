@@ -14,7 +14,6 @@ public class Livro implements ILivro {
     public Livro(String id, String titulo, String editora, List<String> autores, String edicao, String anoPublicacao) {
         this.id = id;
         this.titulo = titulo;
-        this.editora = editora;
         this.edicao = edicao;
         this.editora = editora;
         this.autores = autores;
