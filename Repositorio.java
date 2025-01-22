@@ -36,4 +36,18 @@ public class Repositorio {
         return null;
     }
 
+    public void adicionarUsuario(Usuario usuario) {
+        usuarios.add(usuario);
+    }
+
+    public void getUsuarios() {
+        for (Usuario usuario : usuarios) {
+            System.out.printf(usuario.getNome() + " - " + usuario.getId() + "\n");
+        }
+    }
+
+    public void adicionarLivro(Livro livro) {
+        livros.add(livro);
+    }
+
 }
