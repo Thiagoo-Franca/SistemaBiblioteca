@@ -50,4 +50,10 @@ public class Repositorio {
         livros.add(livro);
     }
 
+    public void getLivros() {
+        for (Livro livro : livros) {
+            System.out.printf(livro.getTitulo() + " - " + livro.getId() + "\n");
+        }
+    }
+
 }
