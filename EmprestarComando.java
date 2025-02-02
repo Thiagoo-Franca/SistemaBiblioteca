@@ -8,7 +8,8 @@ public class EmprestarComando implements IComando {
         Usuario usuario = repositorio.obterUsuarioPorCodigo(carregadorParametros.getParametroUm());
         Livro livro = repositorio.obterLivroPorCodigo(carregadorParametros.getParametroDois());
 
-        usuario.performEmprestimo(livro);
+        String saida = usuario.performEmprestimo(livro);
+        System.out.println(saida);
     }
 
 }

@@ -90,16 +90,8 @@ public class SistemaBiblioteca {
                                 l.addExemplar(exemplar9);
                         }
                 }
-                // Testes
-                System.out.println("Usuários cadastrados:");
 
-                repositorio.getUsuarios();
-
-                System.out.println("Livros cadastrados:");
-
-                repositorio.getLivros();
-
-                // Teste de empréstimo
+                // Entrada de comandos
 
                 BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
 
@@ -125,13 +117,16 @@ public class SistemaBiblioteca {
                                 CarregadorParametros carregador = new CarregadorParametros(idLivro);
                                 IComando comandoConsulta = new ConsultarLivroComando();
                                 comandoConsulta.executar(carregador);
-                        } else if (comando.equals("usu")) {
+
+                        } // comando para consultar um usuario
+                        else if (comando.equals("usu")) {
                                 String idUsuario = entrada[1];
 
                                 CarregadorParametros carregador = new CarregadorParametros(idUsuario);
                                 IComando comandoConsulta = new ConsultarUsuarioComando();
                                 comandoConsulta.executar(carregador);
-                        } else if (comando.equals("res")) {
+                        } // comando para reservar um livro
+                        else if (comando.equals("res")) {
                                 String idUsuario = entrada[1];
                                 String idLivro = entrada[2];
 

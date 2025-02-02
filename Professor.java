@@ -1,9 +1,9 @@
 public class Professor extends Usuario {
     private final int tempoEmprestimo = 8;
-    private ObservadorStategy observador;
+    private IObservadorStategy observador;
 
     public Professor() {
-        emprestimoStrategy = new emprestimoProfessor();
-        observador = new notificarProfessor();
+        emprestimoStrategy = new EmprestimoProfessor();
+        observador = new NotificarProfessor();
     }
 }
