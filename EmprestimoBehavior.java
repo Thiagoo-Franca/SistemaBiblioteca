@@ -1,5 +1,6 @@
-
 public interface EmprestimoBehavior {
 
-    public void pedirEmprestimo();
+    public String pedirEmprestimo(Usuario usuario, Livro livro);
+
+    public int dataDevolucao(Usuario usuario);
 }

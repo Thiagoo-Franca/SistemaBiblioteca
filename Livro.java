@@ -10,6 +10,7 @@ public class Livro implements ILivro {
     private List<String> autores = new ArrayList();
     private String anoPublicacao;
     private List<Exemplar> exemplares = new ArrayList();
+    private int qntReservas = 0;
 
     public Livro(String id, String titulo, String editora, List<String> autores, String edicao, String anoPublicacao) {
         this.id = id;
@@ -53,5 +54,36 @@ public class Livro implements ILivro {
     @Override
     public int getQuantidadeExemplares() {
         return this.exemplares.size();
+    }
+
+    public int qntReservas() {
+        return qntReservas;
+    }
+
+    public int adicionarReserva() {
+        return qntReservas++;
+    }
+
+    public int removerReserva() {
+        return qntReservas--;
+    }
+
+    public int getQntExemplaresDisponiveis() {
+        int qnt = 0;
+        for (Exemplar exemplar : exemplares) {
+            if (exemplar.isDisponivel()) {
+                qnt++;
+            }
+        }
+        return qnt;
+    }
+
+    public void setExemplarIndispovel() {
+        for (Exemplar exemplar : exemplares) {
+            if (exemplar.isDisponivel()) {
+                exemplar.setExemplarIndispovel();
+                break;
+            }
+        }
     }
 }
