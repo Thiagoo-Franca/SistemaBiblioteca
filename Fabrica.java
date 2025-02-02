@@ -28,4 +28,9 @@ public class Fabrica {
         Livro livro = new Livro(id, titulo, editora, autores, edicao, anoPublicacao);
         return livro;
     }
+
+    public Exemplar criarExemplar(String livroid, String exemplarId, String status) {
+        Exemplar exemplar = new Exemplar(livroid, exemplarId, status);
+        return exemplar;
+    }
 }

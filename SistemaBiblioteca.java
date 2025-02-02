@@ -11,6 +11,8 @@ public class SistemaBiblioteca {
 
                 Fabrica fabrica = new Fabrica();
 
+                // Criação de usuários
+
                 Usuario alunoGraduacao = fabrica.criarAlunoGraduacao("123", "João da Silva");
                 Usuario alunoPosGraduacao = fabrica.criarAlunoPosGraduacao("456", "Luiz Fernando Rodrigues");
                 Usuario alunoGraduacao1 = fabrica.criarAlunoGraduacao("789", "Pedro Paulo");
@@ -20,6 +22,8 @@ public class SistemaBiblioteca {
                 repositorio.adicionarUsuario(alunoPosGraduacao);
                 repositorio.adicionarUsuario(alunoGraduacao1);
                 repositorio.adicionarUsuario(professor);
+
+                // Criação de livros
 
                 Livro livro1 = fabrica.criarLivro("100", "Engenharia de Software", "Addison Wesley",
                                 List.of("Ian Sommervile"),
@@ -38,6 +42,14 @@ public class SistemaBiblioteca {
                 Livro livro6 = fabrica.criarLivro("301", "Software Metrics: A rigorous and Practical Approach",
                                 "CRC Press",
                                 List.of("Norman Fenton", "James Bieman"), "3ª", "2014");
+                Livro livro7 = fabrica.criarLivro("400",
+                                "Design Patterns: Elements of Reusable Object-Oriented Software",
+                                "Addison Wesley Professional",
+                                List.of("Erich Gamma", "Richard Helm", "Ralph Johnson", "John Vlissides"),
+                                "1ª", "1994");
+                Livro livro8 = fabrica.criarLivro("401",
+                                "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
+                                "Addison Wesley Professional", List.of("Martin Fowler"), "3ª", "2003");
 
                 repositorio.adicionarLivro(livro1);
                 repositorio.adicionarLivro(livro2);
@@ -45,7 +57,39 @@ public class SistemaBiblioteca {
                 repositorio.adicionarLivro(livro4);
                 repositorio.adicionarLivro(livro5);
                 repositorio.adicionarLivro(livro6);
+                repositorio.adicionarLivro(livro7);
+                repositorio.adicionarLivro(livro8);
 
+                // criacao de exemplares
+
+                Exemplar exemplar1 = fabrica.criarExemplar("100", "01", "disponivel");
+                Exemplar exemplar2 = fabrica.criarExemplar("100", "02", "disponivel");
+                Exemplar exemplar3 = fabrica.criarExemplar("101", "03", "disponivel");
+                Exemplar exemplar4 = fabrica.criarExemplar("200", "04", "disponivel");
+                Exemplar exemplar5 = fabrica.criarExemplar("201", "05", "disponivel");
+                Exemplar exemplar6 = fabrica.criarExemplar("300", "06", "disponivel");
+                Exemplar exemplar7 = fabrica.criarExemplar("300", "07", "disponivel");
+                Exemplar exemplar8 = fabrica.criarExemplar("400", "08", "disponivel");
+                Exemplar exemplar9 = fabrica.criarExemplar("400", "09", "disponivel");
+
+                for (Livro l : repositorio.buscarLivros()) {
+                        if (l.getId().equals("100")) {
+                                l.addExemplar(exemplar1);
+                                l.addExemplar(exemplar2);
+                        } else if (l.getId().equals("101")) {
+                                l.addExemplar(exemplar3);
+                        } else if (l.getId().equals("200")) {
+                                l.addExemplar(exemplar4);
+                        } else if (l.getId().equals("201")) {
+                                l.addExemplar(exemplar5);
+                        } else if (l.getId().equals("300")) {
+                                l.addExemplar(exemplar6);
+                                l.addExemplar(exemplar7);
+                        } else if (l.getId().equals("400")) {
+                                l.addExemplar(exemplar8);
+                                l.addExemplar(exemplar9);
+                        }
+                }
                 // Testes
                 System.out.println("Usuários cadastrados:");
 

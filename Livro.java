@@ -79,6 +79,10 @@ public class Livro implements ILivro {
         return qnt;
     }
 
+    public void addExemplar(Exemplar exemplar) {
+        exemplares.add(exemplar);
+    }
+
     public String setExemplarIndispovel() {
         for (Exemplar exemplar : exemplares) {
             if (exemplar.isDisponivel()) {
@@ -137,17 +141,13 @@ public class Livro implements ILivro {
             for (Usuario usuario : reservas) {
                 System.out.println(usuario.getNome());
             }
+        } else {
+            System.out.println("Nenhum usuario realizou reserva");
         }
         for (Exemplar exemplar : exemplares) {
-            System.out.println("Codigo: " + exemplar.getId());
-            if (exemplar.isDisponivel()) {
-                System.out.println("Status: Disponivel");
-            } else {
-                System.out.println("Status: Emprestado");
-                System.out.println("Usuario que realizou o emprestimo: " + exemplar.getUsuario().getNome());
-                System.out.println("Data de emprestimo: " + exemplar.getDataEmprestimo());
-                System.out.println("Data prevista para devolucao: " + exemplar.getDataDevolucao());
-            }
+            System.out.println("Codigo: " + exemplar.getId() + " | " + "Status: " + exemplar.getStatus());
+            // falta implementar caso exemplar esteja emprestado
         }
+
     }
 }
