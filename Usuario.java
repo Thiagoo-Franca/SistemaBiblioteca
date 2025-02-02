@@ -2,7 +2,7 @@
 import java.util.List;
 
 public abstract class Usuario {
-    EmprestimoBehavior emprestimoBehavior;
+    EmprestimoStrategy emprestimoStrategy;
     private String nome;
     private String id;
     private int tempoEmprestimo;
@@ -49,10 +49,11 @@ public abstract class Usuario {
     /* Funcões sobre Emprestimo */
 
     public void performEmprestimo(Livro livro) {
-        emprestimoBehavior.pedirEmprestimo(this, livro);
+        emprestimoStrategy.pedirEmprestimo(this, livro);
     }
 
     public void addLivroEmprestado(Exemplar livro) {
+        livro.setUsuario(this);
         livrosEmprestados.add(livro);
     }
 
@@ -95,6 +96,7 @@ public abstract class Usuario {
     public String solicitarReserva(Livro livro) {
         if (livrosReservados.size() < qntReservasMaximas) {
             livrosReservados.add(livro);
+            livro.addUsuarioReserva(this);
             return "Usuario: " + this.nome + "Reserva realizada com sucesso para o livro: " + livro.getTitulo();
         }
         return "Limite de reservas atingido!";
@@ -112,4 +114,5 @@ public abstract class Usuario {
         }
         return false;
     }
+
 }

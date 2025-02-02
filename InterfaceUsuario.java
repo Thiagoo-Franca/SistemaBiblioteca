@@ -2,7 +2,7 @@
 import java.util.HashMap;
 
 public class InterfaceUsuario {
-    private HashMap<String, Comando> comandos = new HashMap<String, Comando>();
+    private HashMap<String, IComando> comandos = new HashMap<String, IComando>();
 
     private void inicializarComandos() {
         comandos.put("emp", new EmprestarComando());
@@ -10,7 +10,7 @@ public class InterfaceUsuario {
     }
 
     public void executarComando(String strComando, CarregadorParametros carregadorParametros) {
-        Comando comando = comandos.get(strComando);
+        IComando comando = comandos.get(strComando);
         comando.executar(carregadorParametros);
     }
 }

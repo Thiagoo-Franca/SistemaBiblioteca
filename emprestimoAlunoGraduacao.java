@@ -1,4 +1,4 @@
-public class emprestimoAlunoGraduacao implements EmprestimoBehavior {
+public class emprestimoAlunoGraduacao implements EmprestimoStrategy {
 
     /*
      * A reserva garante a prioridade no empréstimo apenas entre os alunos
@@ -44,8 +44,11 @@ public class emprestimoAlunoGraduacao implements EmprestimoBehavior {
                     if (usuario.reservouLivro(livro) == true) {
                         if (usuario.verificarLivroEmprestimoEmAndamento(livro) == false) {
                             usuario.cancelarReserva(livro);
-                            usuario.addLivroEmprestado(livro);
-                            livro.setExemplarIndispovel();
+
+                            String cod = livro.setExemplarIndispovel();
+
+                            usuario.addLivroEmprestado(livro.buscarExemplar(cod));
+
                             return "Sucesso, Livro " + livro.getTitulo() + " emprestado para " + usuario.getNome() +
                                     ". Devolucao em " + dataDevolucao(usuario) + " dias";
                         }

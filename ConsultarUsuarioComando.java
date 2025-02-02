@@ -1,5 +1,5 @@
 
-public class ConsultarUsuarioComando implements Comando {
+public class ConsultarUsuarioComando implements IComando {
 
     @Override
     public void executar(CarregadorParametros carregadorParametros) {

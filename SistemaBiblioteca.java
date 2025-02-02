@@ -1,9 +1,12 @@
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class SistemaBiblioteca {
 
-        public static void main(String[] args) {
+        public static void main(String[] args) throws IOException {
                 Repositorio repositorio = Repositorio.obterIntancia();
 
                 Fabrica fabrica = new Fabrica();
@@ -52,5 +55,36 @@ public class SistemaBiblioteca {
 
                 repositorio.getLivros();
 
+                // Teste de empréstimo
+
+                BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
+
+                while (true) {
+                        System.out.println("Digite um comando");
+
+                        String[] entrada = teclado.readLine().split(" ");
+                        String comando = entrada[0];
+
+                        // Comando para emprestar um livro
+                        if (comando.equals("emp")) {
+                                String idUsuario = entrada[1];
+                                String idLivro = entrada[2];
+
+                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                IComando comandoEmprestimo = new EmprestarComando();
+                                comandoEmprestimo.executar(carregador);
+                        }
+                        // comando para consultar um livro
+                        else if (comando.equals("liv")) {
+                                String idLivro = entrada[1];
+
+                                CarregadorParametros carregador = new CarregadorParametros(idLivro);
+                                IComando comandoConsulta = new ConsultarLivroComando();
+                                comandoConsulta.executar(carregador);
+                        }
+
+                }
+
         }
+
 }

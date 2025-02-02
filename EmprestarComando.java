@@ -1,5 +1,5 @@
 
-public class EmprestarComando implements Comando {
+public class EmprestarComando implements IComando {
 
     @Override
     public void executar(CarregadorParametros carregadorParametros) {
@@ -7,6 +7,8 @@ public class EmprestarComando implements Comando {
 
         Usuario usuario = repositorio.obterUsuarioPorCodigo(carregadorParametros.getParametroUm());
         Livro livro = repositorio.obterLivroPorCodigo(carregadorParametros.getParametroDois());
+
+        usuario.performEmprestimo(livro);
     }
 
 }

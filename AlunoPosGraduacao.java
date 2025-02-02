@@ -1,5 +1,7 @@
 public class AlunoPosGraduacao extends Usuario {
+    private final int tempoEmprestimo = 5;
+
     public AlunoPosGraduacao() {
-        emprestimoBehavior = new emprestimoAlunoPos();
+        emprestimoStrategy = new emprestimoAlunoPos();
     }
 }
