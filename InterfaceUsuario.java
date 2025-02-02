@@ -9,8 +9,8 @@ public class InterfaceUsuario {
         comandos.put("usu", new ConsultarUsuarioComando());
     }
 
-    public void executarComando (String strComando, carregadorParametros) {
+    public void executarComando(String strComando, CarregadorParametros carregadorParametros) {
         Comando comando = comandos.get(strComando);
-        Comando.executar(carregadorParametros); 
+        comando.executar(carregadorParametros);
     }
 }

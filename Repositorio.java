@@ -27,6 +27,10 @@ public class Repositorio {
         return null;
     }
 
+    public List<Livro> buscarLivros() {
+        return livros;
+    }
+
     public Livro obterLivroPorCodigo(String codigo) {
         for (Livro livro : livros) {
             if (livro.getId().equals(codigo)) {

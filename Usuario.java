@@ -8,8 +8,11 @@ public abstract class Usuario {
     private int tempoEmprestimo;
     private boolean devedor = false;
     private final int maxLivroEmprestado = 2;
-    private List<Livro> livrosEmprestados;
+    private List<Exemplar> livrosEmprestados;
     private List<Livro> livrosReservados;
+    private final int qntReservasMaximas = 3;
+
+    /* Informações do usuário */
 
     public String getNome() {
         return this.nome;
@@ -43,19 +46,13 @@ public abstract class Usuario {
         this.id = id;
     }
 
+    /* Funcões sobre Emprestimo */
+
     public void performEmprestimo(Livro livro) {
         emprestimoBehavior.pedirEmprestimo(this, livro);
     }
 
-    public void solicitarReserva(Livro livro) {
-        // falta implementar a funcionalidade de reserva
-    }
-
-    public void cancelarReserva(Livro livro) {
-        // falta implementar a funcionalidade de cancelar reserva
-    }
-
-    public void addLivroEmprestado(Livro livro) {
+    public void addLivroEmprestado(Exemplar livro) {
         livrosEmprestados.add(livro);
     }
 
@@ -67,6 +64,46 @@ public abstract class Usuario {
         return maxLivroEmprestado - livrosEmprestados.size();
     }
 
+    public boolean verificarLivroEmprestimoEmAndamento(Livro livro) {
+        for (Exemplar l : livrosEmprestados) {
+            if (l.getId().equals(livro.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /* Funções sobre Devolução */
+
+    public void devolucaoLivro(Exemplar exemplar) {
+        String livroId = exemplar.getLivroId();
+
+        Repositorio repositorio = Repositorio.obterIntancia();
+
+        for (Livro l : repositorio.buscarLivros()) {
+            if (l.getId().equals(livroId)) {
+                l.setExemplarDisponivel(exemplar.getId());
+                break;
+            }
+        }
+        this.livrosEmprestados.remove(exemplar);
+
+    }
+
+    /* Funções sobre Reserva */
+
+    public String solicitarReserva(Livro livro) {
+        if (livrosReservados.size() < qntReservasMaximas) {
+            livrosReservados.add(livro);
+            return "Usuario: " + this.nome + "Reserva realizada com sucesso para o livro: " + livro.getTitulo();
+        }
+        return "Limite de reservas atingido!";
+    }
+
+    public void cancelarReserva(Livro livro) {
+        // falta implementar a funcionalidade de cancelar reserva
+    }
+
     public boolean reservouLivro(Livro livro) {
         for (Livro l : livrosReservados) {
             if (l.getId().equals(livro.getId())) {
@@ -75,14 +112,4 @@ public abstract class Usuario {
         }
         return false;
     }
-
-    public boolean verificarLivroEmprestimoEmAndamento(Livro livro) {
-        for (Livro l : livrosEmprestados) {
-            if (l.getId().equals(livro.getId())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

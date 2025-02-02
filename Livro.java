@@ -86,4 +86,13 @@ public class Livro implements ILivro {
             }
         }
     }
+
+    public void setExemplarDisponivel(String id) {
+        for (Exemplar exemplar : exemplares) {
+            if (exemplar.getId().equals(id)) {
+                exemplar.setExemplarDisponivel();
+                break;
+            }
+        }
+    }
 }

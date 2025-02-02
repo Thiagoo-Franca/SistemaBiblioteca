@@ -18,9 +18,17 @@ public class Exemplar {
     }
 
     public boolean isDisponivel() {
-        if (this.Status.equals("Disponivel")) {
+        if (this.Status == "Disponivel") {
             return true;
         }
         return false;
+    }
+
+    public String getId() {
+        return this.idExemplar;
+    }
+
+    public String getLivroId() {
+        return this.idLivro;
     }
 }

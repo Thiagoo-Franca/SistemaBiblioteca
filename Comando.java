@@ -1,3 +1,3 @@
 public interface Comando {
-    public void executar(CarregadorParamentros carregadorParamentros);
+    public void executar(CarregadorParametros carregadorParamentros);
 }

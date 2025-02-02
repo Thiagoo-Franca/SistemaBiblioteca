@@ -1,4 +1,4 @@
-public abstract class emprestimoAlunoGraduacao implements EmprestimoBehavior {
+public class emprestimoAlunoGraduacao implements EmprestimoBehavior {
 
     /*
      * A reserva garante a prioridade no empréstimo apenas entre os alunos
@@ -46,17 +46,19 @@ public abstract class emprestimoAlunoGraduacao implements EmprestimoBehavior {
                             usuario.cancelarReserva(livro);
                             usuario.addLivroEmprestado(livro);
                             livro.setExemplarIndispovel();
-                            dataDevolucao(usuario);
-                            return "Sucesso, Livro " + livro.getTitulo() + " emprestado para " + usuario.getNome();
-                        } else {
-                            return "Insucesso, " + usuario.getNome() + " já possui um exemplar do livro "
-                                    + livro.getTitulo() + " emprestado";
+                            return "Sucesso, Livro " + livro.getTitulo() + " emprestado para " + usuario.getNome() +
+                                    ". Devolucao em " + dataDevolucao(usuario) + " dias";
                         }
+                        return "Insucesso, usuario já possui um exemplar do livro emprestado";
+
                     }
+                    return "Insucesso, usuario não reservou o livro";
                 }
+                return "Insucesso, usuario não possui emprestimos disponiveis";
             }
+            return "Insucesso, usuario está com pendencias";
         }
-        return "Insucesso";
+        return "Insucesso " + livro.getTitulo() + " não possui exemplares disponiveis";
     }
 
     @Override
