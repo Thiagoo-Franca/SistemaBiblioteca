@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Usuario {
@@ -8,8 +8,8 @@ public abstract class Usuario {
     private int tempoEmprestimo;
     private boolean devedor = false;
     private final int maxLivroEmprestado = 2;
-    private List<Exemplar> livrosEmprestados;
-    private List<Livro> livrosReservados;
+    private final List<Emprestimo> livrosEmprestados = new ArrayList<>();
+    private final List<Reserva> livrosReservados = new ArrayList<>();
     private final int qntReservasMaximas = 3;
 
     /* Informações do usuário */
@@ -22,9 +22,13 @@ public abstract class Usuario {
         return this.id;
     };
 
-    public int getTempoEmprestimo() {
-        return this.tempoEmprestimo;
-    };
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public boolean verificarDevedor() {
         return this.devedor;
@@ -38,13 +42,31 @@ public abstract class Usuario {
         this.devedor = false;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public void consultarInformacoes() {
+        if (livrosEmprestados == null) {
+            System.out.println("Nenhum livro emprestado");
+        } else {
+            for (Emprestimo emprestimo : livrosEmprestados) {
+                System.out.println("Titulo: " + emprestimo.getExemplar().getTitulo());
+                System.out.println("Data do emprestimo: " + emprestimo.getDataEmprestimo());
+                System.out.println("Status: " + emprestimo.getExemplar().getStatus());
+                if (emprestimo.getExemplar().getStatus().equals("Emprestado")) {
+                    System.out.println("Data de devolução: " + emprestimo.getDataDevolucao());
+                }
+            }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+        }
+        if (livrosReservados == null) {
+            System.out.println("Nenhum livro reservado");
+        } else {
+            for (Reserva livro : livrosReservados) {
+                System.out.println("Titulo: " + livro.getTituloLivro());
+                System.out.println("Data da reserva: " + livro.getDataReserva());
+            }
+
+        }
+
+    };
 
     /* Funcões sobre Emprestimo */
 
@@ -54,25 +76,35 @@ public abstract class Usuario {
 
     public void addLivroEmprestado(Exemplar livro) {
         livro.setUsuario(this);
-        livrosEmprestados.add(livro);
+        livrosEmprestados.add(new Emprestimo(livro, this));
     }
 
     public int livrosEmprestados() {
+        if (livrosEmprestados == null) {
+            return 0;
+        }
         return livrosEmprestados.size();
     }
 
     public int qntEmprestimosDisponiveis() {
-        return maxLivroEmprestado - livrosEmprestados.size();
+        if (livrosEmprestados() > 0) {
+            return maxLivroEmprestado - livrosEmprestados.size();
+        }
+        return 0;
     }
 
     public boolean verificarLivroEmprestimoEmAndamento(Livro livro) {
-        for (Exemplar l : livrosEmprestados) {
-            if (l.getId().equals(livro.getId())) {
+        for (Emprestimo l : livrosEmprestados) {
+            if (l.getExemplar().getId().equals(livro.getId())) {
                 return true;
             }
         }
         return false;
     }
+
+    public int getTempoEmprestimo() {
+        return this.tempoEmprestimo;
+    };
 
     /* Funções sobre Devolução */
 
@@ -87,19 +119,26 @@ public abstract class Usuario {
                 break;
             }
         }
-        this.livrosEmprestados.remove(exemplar);
 
+        for (Emprestimo emp : livrosEmprestados) {
+            if (emp.getExemplar().getId().equals(exemplar.getId())) {
+                livrosEmprestados.remove(emp);
+                break;
+            }
+        }
     }
 
     /* Funções sobre Reserva */
 
-    public String solicitarReserva(Livro livro) {
-        if (livrosReservados.size() < qntReservasMaximas) {
-            livrosReservados.add(livro);
-            livro.addUsuarioReserva(this);
-            return "Usuario: " + this.nome + "Reserva realizada com sucesso para o livro: " + livro.getTitulo();
+    public void solicitarReserva(Livro livro) {
+        if (livrosEmReserva() < qntReservasMaximas) {
+            addReserva((new Reserva(livro.getId(), this.getId())));
+            System.out.println(
+                    "Usuario: " + this.nome + " Reserva realizada com sucesso para o livro: " + livro.getTitulo());
+        } else {
+            System.out.println("Limite de reservas atingido!");
         }
-        return "Limite de reservas atingido!";
+
     }
 
     public void cancelarReserva(Livro livro) {
@@ -107,12 +146,23 @@ public abstract class Usuario {
     }
 
     public boolean reservouLivro(Livro livro) {
-        for (Livro l : livrosReservados) {
-            if (l.getId().equals(livro.getId())) {
+        for (Reserva l : livrosReservados) {
+            if (l.getIdLivro().equals(livro.getId())) {
                 return true;
             }
         }
         return false;
+    }
+
+    public int livrosEmReserva() {
+        if (livrosReservados == null) {
+            return 0;
+        }
+        return livrosReservados.size();
+    }
+
+    public void addReserva(Reserva reserva) {
+        livrosReservados.add(reserva);
     }
 
 }

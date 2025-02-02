@@ -5,7 +5,7 @@ public class emprestimoProfessor implements EmprestimoStrategy {
         if (livro.getQuantidadeExemplares() > 0) {
             if (usuario.verificarDevedor() == false && usuario.qntEmprestimosDisponiveis() > 0) {
 
-                String cod = livro.setExemplarIndispovel();
+                String cod = livro.setExemplarEmprestado();
 
                 usuario.addLivroEmprestado(livro.buscarExemplar(cod));
 

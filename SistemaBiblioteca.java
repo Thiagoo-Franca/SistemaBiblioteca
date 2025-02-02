@@ -62,15 +62,15 @@ public class SistemaBiblioteca {
 
                 // criacao de exemplares
 
-                Exemplar exemplar1 = fabrica.criarExemplar("100", "01", "disponivel");
-                Exemplar exemplar2 = fabrica.criarExemplar("100", "02", "disponivel");
-                Exemplar exemplar3 = fabrica.criarExemplar("101", "03", "disponivel");
-                Exemplar exemplar4 = fabrica.criarExemplar("200", "04", "disponivel");
-                Exemplar exemplar5 = fabrica.criarExemplar("201", "05", "disponivel");
-                Exemplar exemplar6 = fabrica.criarExemplar("300", "06", "disponivel");
-                Exemplar exemplar7 = fabrica.criarExemplar("300", "07", "disponivel");
-                Exemplar exemplar8 = fabrica.criarExemplar("400", "08", "disponivel");
-                Exemplar exemplar9 = fabrica.criarExemplar("400", "09", "disponivel");
+                Exemplar exemplar1 = fabrica.criarExemplar("100", "01", "Disponivel");
+                Exemplar exemplar2 = fabrica.criarExemplar("100", "02", "Disponivel");
+                Exemplar exemplar3 = fabrica.criarExemplar("101", "03", "Disponivel");
+                Exemplar exemplar4 = fabrica.criarExemplar("200", "04", "Disponivel");
+                Exemplar exemplar5 = fabrica.criarExemplar("201", "05", "Disponivel");
+                Exemplar exemplar6 = fabrica.criarExemplar("300", "06", "Disponivel");
+                Exemplar exemplar7 = fabrica.criarExemplar("300", "07", "Disponivel");
+                Exemplar exemplar8 = fabrica.criarExemplar("400", "08", "Disponivel");
+                Exemplar exemplar9 = fabrica.criarExemplar("400", "09", "Disponivel");
 
                 for (Livro l : repositorio.buscarLivros()) {
                         if (l.getId().equals("100")) {
@@ -125,6 +125,19 @@ public class SistemaBiblioteca {
                                 CarregadorParametros carregador = new CarregadorParametros(idLivro);
                                 IComando comandoConsulta = new ConsultarLivroComando();
                                 comandoConsulta.executar(carregador);
+                        } else if (comando.equals("usu")) {
+                                String idUsuario = entrada[1];
+
+                                CarregadorParametros carregador = new CarregadorParametros(idUsuario);
+                                IComando comandoConsulta = new ConsultarUsuarioComando();
+                                comandoConsulta.executar(carregador);
+                        } else if (comando.equals("res")) {
+                                String idUsuario = entrada[1];
+                                String idLivro = entrada[2];
+
+                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                IComando comandoReserva = new ReservarComando();
+                                comandoReserva.executar(carregador);
                         }
 
                 }

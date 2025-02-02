@@ -14,7 +14,7 @@ public class emprestimoAlunoPos implements EmprestimoStrategy {
 
                             usuario.cancelarReserva(livro);
 
-                            String cod = livro.setExemplarIndispovel();
+                            String cod = livro.setExemplarEmprestado();
 
                             usuario.addLivroEmprestado(livro.buscarExemplar(cod));
 

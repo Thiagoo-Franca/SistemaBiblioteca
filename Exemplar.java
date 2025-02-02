@@ -1,13 +1,12 @@
-
 import java.time.LocalDate;
 
 public class Exemplar {
     private String idLivro;
     private String idExemplar;
     private String status;
-
     private Usuario usuario;
-    // um exemplar pode ter um ou mais emprestimos
+    private String dataEmprestimo;
+    private String dataDevolucao;
 
     public Exemplar(String livroId, String exemplarId, String status) {
         this.idLivro = livroId;
@@ -15,8 +14,8 @@ public class Exemplar {
         this.idExemplar = exemplarId;
     }
 
-    public void setExemplarIndispovel() {
-        this.status = "Indisponivel";
+    public void setExemplarEsprestado() {
+        this.status = "Emprestado";
     }
 
     public String getStatus() {
@@ -25,10 +24,6 @@ public class Exemplar {
 
     public void setExemplarDisponivel() {
         this.status = "Disponivel";
-    }
-
-    public boolean isDisponivel() {
-        return this.status.equals("Disponivel");
     }
 
     public String getId() {
@@ -57,13 +52,17 @@ public class Exemplar {
         this.usuario = usuario;
     }
 
-    public String getDataEmprestimo() {
-        LocalDate data = LocalDate.now();
-        return data.toString();
+    public void setDataEmprestimo() {
+        LocalDate dataEmprestimo = LocalDate.now();
+        setDataDevolucao(dataEmprestimo.plusDays(usuario.getTempoEmprestimo()));
+        this.dataEmprestimo = dataEmprestimo.toString();
     }
 
-    public String getDataDevolucao() {
-        LocalDate data = LocalDate.now().plusDays(usuario.getTempoEmprestimo());
-        return data.toString();
+    public String getDataEmprestimo() {
+        return this.dataEmprestimo;
+    }
+
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao.toString();
     }
 }

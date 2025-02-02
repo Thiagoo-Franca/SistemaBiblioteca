@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class Livro implements ILivro {
     public int getQntExemplaresDisponiveis() {
         int qnt = 0;
         for (Exemplar exemplar : exemplares) {
-            if (exemplar.isDisponivel()) {
+            if (exemplar.getStatus() == "Disponivel") {
                 qnt++;
             }
         }
@@ -83,10 +82,10 @@ public class Livro implements ILivro {
         exemplares.add(exemplar);
     }
 
-    public String setExemplarIndispovel() {
+    public String setExemplarEmprestado() {
         for (Exemplar exemplar : exemplares) {
-            if (exemplar.isDisponivel()) {
-                exemplar.setExemplarIndispovel();
+            if (exemplar.getStatus() == "Disponivel") {
+                exemplar.setExemplarEsprestado();
                 return exemplar.getId();
             }
         }
@@ -146,8 +145,11 @@ public class Livro implements ILivro {
         }
         for (Exemplar exemplar : exemplares) {
             System.out.println("Codigo: " + exemplar.getId() + " | " + "Status: " + exemplar.getStatus());
-            // falta implementar caso exemplar esteja emprestado
+            if (exemplar.getStatus() == "Emprestado") {
+                System.out.println("Usuario: " + exemplar.getUsuario().getNome());
+            }
         }
 
     }
+
 }

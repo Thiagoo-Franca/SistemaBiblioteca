@@ -45,7 +45,7 @@ public class emprestimoAlunoGraduacao implements EmprestimoStrategy {
                         if (usuario.verificarLivroEmprestimoEmAndamento(livro) == false) {
                             usuario.cancelarReserva(livro);
 
-                            String cod = livro.setExemplarIndispovel();
+                            String cod = livro.setExemplarEmprestado();
 
                             usuario.addLivroEmprestado(livro.buscarExemplar(cod));
 
