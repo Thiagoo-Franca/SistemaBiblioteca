@@ -2,15 +2,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Livro implements ILivro, IObservavel {
-    private String titulo;
-    private String id;
-    private String edicao;
-    private String editora;
+    private final String titulo;
+    private final String id;
+    private final String edicao;
+    private final String editora;
     private List<String> autores = new ArrayList();
-    private String anoPublicacao;
-    private List<Exemplar> exemplares = new ArrayList();
-    private List<Usuario> reservas = new ArrayList();
-    private List<IObservador> observadores = new ArrayList();
+    private final String anoPublicacao;
+    private final List<Exemplar> exemplares = new ArrayList();
+    private final List<Usuario> reservas = new ArrayList();
+    private final List<IObservador> observadores = new ArrayList();
 
     public Livro(String id, String titulo, String editora, List<String> autores, String edicao, String anoPublicacao) {
         this.id = id;
@@ -29,6 +29,10 @@ public class Livro implements ILivro, IObservavel {
     @Override
     public String getTitulo() {
         return this.titulo;
+    }
+
+    public void setAutores(List<String> autores) {
+        this.autores = autores;
     }
 
     @Override
@@ -120,24 +124,6 @@ public class Livro implements ILivro, IObservavel {
         reservas.add(usuario);
     }
 
-    /*
-     * Dado o código de um livro, o sistema deve apresentar suas informações da
-     * seguinte forma:
-     * 
-     * (i) título,
-     * 
-     * (ii) quantidade de reservas para aquele livro, e, se diferente de zero, devem
-     * ser também apresentados o nome dos usuários que realizaram cada reserva,
-     * 
-     * (iii) para cada exemplar, deve ser apresentado seu código, seu status
-     * (disponível ou emprestado).
-     * 
-     * Caso o exemplar esteja
-     * emprestado deverá ser exibido o nome do usuário que realizou o empréstimo, a
-     * data de empréstimo e a data prevista para devolução.
-     * Para solicitar tal consulta, o usuário deverá digitar o comando “liv”,
-     * seguido do código do livro.
-     */
     public void consultarInformacoes() {
         System.out.println("Titulo: " + this.titulo);
         System.out.println("Quantidade de reservas: " + this.getQntdReservas());
@@ -152,7 +138,7 @@ public class Livro implements ILivro, IObservavel {
         }
         for (Exemplar exemplar : exemplares) {
             System.out.println("Codigo: " + exemplar.getId() + " | " + "Status: " + exemplar.getStatus());
-            if (exemplar.getStatus() == "Emprestado") {
+            if (exemplar.getStatus().equals("Emprestado")) {
                 System.out.println("Usuario: " + exemplar.getUsuario().getNome());
             }
         }
@@ -174,7 +160,7 @@ public class Livro implements ILivro, IObservavel {
     public void notificarObservadores() {
         if (this.getQntdReservas() > 2) {
             for (IObservador observador : observadores) {
-                observador.notificar("Livro tem mais de duas reservas");
+                observador.setQuantidadeNotificacoes();
             }
         }
     }

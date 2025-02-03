@@ -73,21 +73,24 @@ public class SistemaBiblioteca {
                 Exemplar exemplar9 = fabrica.criarExemplar("400", "09", "Disponivel");
 
                 for (Livro l : repositorio.buscarLivros()) {
-                        if (l.getId().equals("100")) {
-                                l.addExemplar(exemplar1);
-                                l.addExemplar(exemplar2);
-                        } else if (l.getId().equals("101")) {
-                                l.addExemplar(exemplar3);
-                        } else if (l.getId().equals("200")) {
-                                l.addExemplar(exemplar4);
-                        } else if (l.getId().equals("201")) {
-                                l.addExemplar(exemplar5);
-                        } else if (l.getId().equals("300")) {
-                                l.addExemplar(exemplar6);
-                                l.addExemplar(exemplar7);
-                        } else if (l.getId().equals("400")) {
-                                l.addExemplar(exemplar8);
-                                l.addExemplar(exemplar9);
+                        switch (l.getId()) {
+                                case "100" -> {
+                                        l.addExemplar(exemplar1);
+                                        l.addExemplar(exemplar2);
+                                }
+                                case "101" -> l.addExemplar(exemplar3);
+                                case "200" -> l.addExemplar(exemplar4);
+                                case "201" -> l.addExemplar(exemplar5);
+                                case "300" -> {
+                                        l.addExemplar(exemplar6);
+                                        l.addExemplar(exemplar7);
+                                }
+                                case "400" -> {
+                                        l.addExemplar(exemplar8);
+                                        l.addExemplar(exemplar9);
+                                }
+                                default -> {
+                                }
                         }
                 }
 
@@ -102,62 +105,59 @@ public class SistemaBiblioteca {
                         String comando = entrada[0];
 
                         // Comando para emprestar um livro
-                        if (comando.equals("emp")) {
-                                String idUsuario = entrada[1];
-                                String idLivro = entrada[2];
-
-                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
-                                IComando comandoEmprestimo = new EmprestarComando();
-                                comandoEmprestimo.executar(carregador);
-                        }
-                        // comando para consultar um livro
-                        else if (comando.equals("liv")) {
-                                String idLivro = entrada[1];
-
-                                CarregadorParametros carregador = new CarregadorParametros(idLivro);
-                                IComando comandoConsulta = new ConsultarLivroComando();
-                                comandoConsulta.executar(carregador);
-
-                        } // comando para consultar um usuario
-                        else if (comando.equals("usu")) {
-                                String idUsuario = entrada[1];
-
-                                CarregadorParametros carregador = new CarregadorParametros(idUsuario);
-                                IComando comandoConsulta = new ConsultarUsuarioComando();
-                                comandoConsulta.executar(carregador);
-                        } // comando para reservar um livro
-                        else if (comando.equals("res")) {
-                                String idUsuario = entrada[1];
-                                String idLivro = entrada[2];
-
-                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
-                                IComando comandoReserva = new ReservarComando();
-                                comandoReserva.executar(carregador);
-                        } else if (comando.equals("dev")) {
-                                String idUsuario = entrada[1];
-                                String idLivro = entrada[2];
-
-                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
-                                IComando comandoDevolucao = new DevolverComando();
-                                comandoDevolucao.executar(carregador);
-                        } else if (comando.equals("obs")) {
-                                String idUsuario = entrada[1];
-                                String idLivro = entrada[2];
-
-                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
-                                IComando comandoObservacao = new ObservacaoComando();
-                                comandoObservacao.executar(carregador);
-
-                        } else if (comando.equals("ntf")) {
-                                String idUsuario = entrada[1];
-
-                                CarregadorParametros carregador = new CarregadorParametros(idUsuario);
-                                IComando comandoNotificacao = new NotificacaoComando();
-                                comandoNotificacao.executar(carregador);
-
-                        } else if (comando.equals("sai")) {
-                                break;
-
+                        switch (comando) {
+                                case "emp" -> {
+                                        String idUsuario = entrada[1];
+                                        String idLivro = entrada[2];
+                                        CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                        IComando comandoEmprestimo = new ComandoEmprestar();
+                                        comandoEmprestimo.executar(carregador);
+                                }
+                                case "liv" -> {
+                                        String idLivro = entrada[1];
+                                        CarregadorParametros carregador = new CarregadorParametros(idLivro);
+                                        IComando comandoConsulta = new ComandoConsultarLivro();
+                                        comandoConsulta.executar(carregador);
+                                } // comando para consultar um usuario
+                                case "usu" -> {
+                                        String idUsuario = entrada[1];
+                                        CarregadorParametros carregador = new CarregadorParametros(idUsuario);
+                                        IComando comandoConsulta = new ComandoConsultarUsuario();
+                                        comandoConsulta.executar(carregador);
+                                } // comando para reservar um livro
+                                case "res" -> {
+                                        String idUsuario = entrada[1];
+                                        String idLivro = entrada[2];
+                                        CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                        IComando comandoReserva = new ComandoReservar();
+                                        comandoReserva.executar(carregador);
+                                }
+                                case "dev" -> {
+                                        String idUsuario = entrada[1];
+                                        String idLivro = entrada[2];
+                                        CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                        IComando comandoDevolucao = new ComandoDevolver();
+                                        comandoDevolucao.executar(carregador);
+                                }
+                                case "obs" -> {
+                                        String idUsuario = entrada[1];
+                                        String idLivro = entrada[2];
+                                        CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                        IComando comandoObservacao = new ComandoObservacao();
+                                        comandoObservacao.executar(carregador);
+                                }
+                                case "ntf" -> {
+                                        String idUsuario = entrada[1];
+                                        CarregadorParametros carregador = new CarregadorParametros(idUsuario);
+                                        IComando comandoNotificacao = new ComandoNotificacao();
+                                        comandoNotificacao.executar(carregador);
+                                }
+                                case "sai" -> {
+                                        IComando comandoSair = new ComandoSair();
+                                        comandoSair.executar(null);
+                                }
+                                default -> {
+                                }
                         }
 
                 }

@@ -1,9 +1,9 @@
 import java.time.LocalDate;
 
 public class Reserva {
-    private String idLivro;
-    private String idUsuario;
-    private String dataReserva;
+    private final String idLivro;
+    private final String idUsuario;
+    private final String dataReserva;
 
     public Reserva(String idLivro, String idUsuario) {
         this.idLivro = idLivro;
@@ -15,6 +15,14 @@ public class Reserva {
         return this.idLivro;
     }
 
+    public String getIdUsuario() {
+        return this.idUsuario;
+    }
+
+    public String getDataReserva() {
+        return this.dataReserva;
+    }
+
     public String getTituloLivro() {
         Repositorio repositorio = Repositorio.obterIntancia();
         for (Livro livro : repositorio.buscarLivros()) {
@@ -23,14 +31,6 @@ public class Reserva {
             }
         }
         return null;
-    }
-
-    public String getIdUsuario() {
-        return this.idUsuario;
-    }
-
-    public String getDataReserva() {
-        return this.dataReserva;
     }
 
 }

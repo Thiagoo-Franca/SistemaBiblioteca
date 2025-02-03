@@ -7,34 +7,29 @@ public abstract class Usuario {
     private String id;
     private int tempoEmprestimo;
     private boolean devedor = false;
-    private int maxEmprestimoLivros;
-    private List<Emprestimo> livrosEmprestados = new ArrayList<>();
-    private List<Reserva> livrosReservados = new ArrayList<>();
+    private final List<Emprestimo> livrosEmprestados = new ArrayList<>();
+    private final List<Reserva> livrosReservados = new ArrayList<>();
     private final int qntReservasMaximas = 3;
-    private List<Reserva> historicoReserva = new ArrayList<>();
-    private List<Emprestimo> historicoEmprestimo = new ArrayList<>();
+    private final List<Reserva> historicoReserva = new ArrayList<>();
+    private final List<Emprestimo> historicoEmprestimo = new ArrayList<>();
 
     /* Informações do usuário */
-
-    public String getNome() {
-        return this.nome;
-    };
-
-    public String getId() {
-        return this.id;
-    };
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    public String getNome() {
+        return this.nome;
+    };
+
     public void setId(String id) {
         this.id = id;
     }
 
-    public boolean verificarDevedor() {
-        return this.devedor;
-    }
+    public String getId() {
+        return this.id;
+    };
 
     public void setDevedor() {
         this.devedor = true;
@@ -44,8 +39,12 @@ public abstract class Usuario {
         this.devedor = false;
     }
 
+    public boolean verificarDevedor() {
+        return this.devedor;
+    }
+
     public void consultarInformacoes() {
-        System.out.println("Livros emprestados: " + livrosEmprestados());
+        System.out.println("Livros emprestados: " + getQntdLivrosPegosEmprestados());
         for (Emprestimo emprestimo : livrosEmprestados) {
             System.out.println("Titulo: " + emprestimo.getExemplar().getTitulo());
             System.out.println("Data do emprestimo: " + emprestimo.getDataEmprestimo());
@@ -96,15 +95,11 @@ public abstract class Usuario {
 
     }
 
-    public int livrosEmprestados() {
+    public int getQntdLivrosPegosEmprestados() {
         if (livrosEmprestados == null) {
             return 0;
         }
         return livrosEmprestados.size();
-    }
-
-    public int qntEmprestimosDisponiveis() {
-        return maxEmprestimoLivros - livrosEmprestados();
     }
 
     public boolean verificarLivroEmprestimoEmAndamento(Livro livro) {
@@ -200,7 +195,5 @@ public abstract class Usuario {
     public void registrarObservador(Livro livro) {
         livro.addUsuarioReserva(this);
     }
-
-    protected abstract void getQntdNotificações();
 
 }

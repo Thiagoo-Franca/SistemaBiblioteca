@@ -1,10 +1,10 @@
 import java.time.LocalDate;
 
 public class Emprestimo {
-    private Exemplar exemplar;
-    private Usuario usuario;
-    private String dataEmprestimo;
-    private String dataDevolucao;
+    private final Exemplar exemplar;
+    private final Usuario usuario;
+    private final String dataEmprestimo;
+    private final String dataDevolucao;
     private String dataDevolucaoRealizada;
 
     public Emprestimo(Exemplar exemplar, Usuario usuario) {

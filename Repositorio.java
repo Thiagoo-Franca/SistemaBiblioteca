@@ -5,8 +5,8 @@ import java.util.List;
 public class Repositorio {
     private static Repositorio instancia;
 
-    private List<Usuario> usuarios = new ArrayList<Usuario>();
-    private List<Livro> livros = new ArrayList<Livro>();
+    private final List<Usuario> usuarios = new ArrayList<>();
+    private final List<Livro> livros = new ArrayList<>();
 
     private Repositorio() {
     }
@@ -27,10 +27,6 @@ public class Repositorio {
         return null;
     }
 
-    public List<Livro> buscarLivros() {
-        return livros;
-    }
-
     public Livro obterLivroPorCodigo(String codigo) {
         for (Livro livro : livros) {
             if (livro.getId().equals(codigo)) {
@@ -40,18 +36,22 @@ public class Repositorio {
         return null;
     }
 
+    public List<Livro> buscarLivros() {
+        return livros;
+    }
+
     public void adicionarUsuario(Usuario usuario) {
         usuarios.add(usuario);
+    }
+
+    public void adicionarLivro(Livro livro) {
+        livros.add(livro);
     }
 
     public void getUsuarios() {
         for (Usuario usuario : usuarios) {
             System.out.printf(usuario.getNome() + " - " + usuario.getId() + "\n");
         }
-    }
-
-    public void adicionarLivro(Livro livro) {
-        livros.add(livro);
     }
 
     public void getLivros() {

@@ -1,8 +1,8 @@
 import java.time.LocalDate;
 
 public class Exemplar {
-    private String idLivro;
-    private String idExemplar;
+    private final String idLivro;
+    private final String idExemplar;
     private String status;
     private Usuario usuario;
     private String dataEmprestimo;
@@ -18,12 +18,12 @@ public class Exemplar {
         this.status = "Emprestado";
     }
 
-    public String getStatus() {
-        return this.status;
-    }
-
     public void setExemplarDisponivel() {
         this.status = "Disponivel";
+    }
+
+    public String getStatus() {
+        return this.status;
     }
 
     public String getId() {
@@ -44,18 +44,18 @@ public class Exemplar {
         return null;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
     public void setDataEmprestimo() {
-        LocalDate dataEmprestimo = LocalDate.now();
-        setDataDevolucao(dataEmprestimo.plusDays(usuario.getTempoEmprestimo()));
-        this.dataEmprestimo = dataEmprestimo.toString();
+        LocalDate emprestimoData = LocalDate.now();
+        setDataDevolucao(emprestimoData.plusDays(usuario.getTempoEmprestimo()));
+        this.dataEmprestimo = emprestimoData.toString();
     }
 
     public String getDataEmprestimo() {
@@ -64,5 +64,9 @@ public class Exemplar {
 
     public void setDataDevolucao(LocalDate dataDevolucao) {
         this.dataDevolucao = dataDevolucao.toString();
+    }
+
+    public String getDataDevolucao() {
+        return dataDevolucao;
     }
 }

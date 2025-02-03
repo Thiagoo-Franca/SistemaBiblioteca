@@ -1,3 +1,7 @@
 public interface IObservador {
-    public void notificar(String mensagem);
+
+    public void setQuantidadeNotificacoes();
+
+    public void getQuantidadeNotificacoes();
+
 }

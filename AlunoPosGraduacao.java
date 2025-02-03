@@ -1,20 +1,22 @@
-public class AlunoPosGraduacao extends Usuario {
-    private final int tempoEmprestimo = 5;
-    private final int maxEmprestimoLivros = 3;
+public class AlunoPosGraduacao extends Usuario implements IEmprestimoDisponivel {
+    private final int tempoEmprestimoCadaLivro = 5;
+    private final int maxEmprestimosLivros = 3;
 
     public AlunoPosGraduacao() {
         emprestimoStrategy = new EmprestimoAluno();
     }
 
+    @Override
     public int getTempoEmprestimo() {
-        return tempoEmprestimo;
+        return tempoEmprestimoCadaLivro;
     }
 
     public int getmaxEmprestimoLivros() {
-        return maxEmprestimoLivros;
+        return maxEmprestimosLivros;
     }
 
     @Override
-    protected void getQntdNotificações() {
+    public int getQntdEmprestimosDisponiveis() {
+        return maxEmprestimosLivros - getQntdLivrosPegosEmprestados();
     }
 }

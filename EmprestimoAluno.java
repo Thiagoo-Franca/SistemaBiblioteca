@@ -1,21 +1,24 @@
 public class EmprestimoAluno implements EmprestimoStrategy {
 
     @Override
-    public String pedirEmprestimo(Usuario usuario, Livro livro) {
-        if (livro.getQuantidadeExemplares() > 0) {
-            if (usuario.verificarDevedor() == false) {
-                if (usuario.qntEmprestimosDisponiveis() > 0) {
-                    if (usuario.reservouLivro(livro) == true
-                            || livro.getQntExemplaresDisponiveis() > livro.getQntdReservas()) {
-                        if (usuario.verificarLivroEmprestimoEmAndamento(livro) == false) {
+    public String pedirEmprestimo(Usuario usuario_, Livro livro) {
 
-                            usuario.cancelarReserva(livro.getId());
+        IEmprestimoDisponivel usuario = (IEmprestimoDisponivel) usuario_;
+
+        if (livro.getQuantidadeExemplares() > 0) {
+            if (!usuario_.verificarDevedor()) {
+                if (usuario.getQntdEmprestimosDisponiveis() > 0) {
+                    if (usuario_.reservouLivro(livro) == true
+                            || livro.getQntExemplaresDisponiveis() > livro.getQntdReservas()) {
+                        if (usuario_.verificarLivroEmprestimoEmAndamento(livro) == false) {
+
+                            usuario_.cancelarReserva(livro.getId());
 
                             String cod = livro.setExemplarEmprestado();
 
-                            usuario.addLivroEmprestado(livro.buscarExemplar(cod));
+                            usuario_.addLivroEmprestado(livro.buscarExemplar(cod));
 
-                            return "Sucesso, Livro " + livro.getTitulo() + " emprestado para " + usuario.getNome();
+                            return "Sucesso, Livro " + livro.getTitulo() + " emprestado para " + usuario_.getNome();
                         }
                         return "Insucesso, usuario já possui um exemplar do livro emprestado";
 

@@ -1,6 +1,6 @@
 
 public class CarregadorParametros {
-    private String parametroUm;
+    private final String parametroUm;
     private String parametroDois;
 
     public CarregadorParametros(String parametroUm) {
