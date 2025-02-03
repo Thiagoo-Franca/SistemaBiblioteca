@@ -140,10 +140,26 @@ public class SistemaBiblioteca {
                                 CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
                                 IComando comandoDevolucao = new DevolverComando();
                                 comandoDevolucao.executar(carregador);
+                        } else if (comando.equals("obs")) {
+                                String idUsuario = entrada[1];
+                                String idLivro = entrada[2];
+
+                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                IComando comandoObservacao = new ObservacaoComando();
+                                comandoObservacao.executar(carregador);
+
+                        } else if (comando.equals("ntf")) {
+                                String idUsuario = entrada[1];
+
+                                CarregadorParametros carregador = new CarregadorParametros(idUsuario);
+                                IComando comandoNotificacao = new NotificacaoComando();
+                                comandoNotificacao.executar(carregador);
+
+                        } else if (comando.equals("sai")) {
+                                break;
+
                         }
 
                 }
-
         }
-
 }

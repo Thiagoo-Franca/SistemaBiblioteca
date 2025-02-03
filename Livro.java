@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Livro implements ILivro {
+public class Livro implements ILivro, IObservavel {
     private String titulo;
     private String id;
     private String edicao;
@@ -9,8 +9,8 @@ public class Livro implements ILivro {
     private List<String> autores = new ArrayList();
     private String anoPublicacao;
     private List<Exemplar> exemplares = new ArrayList();
-    private int qntReservas = 0;
     private List<Usuario> reservas = new ArrayList();
+    private List<IObservador> observadores = new ArrayList();
 
     public Livro(String id, String titulo, String editora, List<String> autores, String edicao, String anoPublicacao) {
         this.id = id;
@@ -56,22 +56,28 @@ public class Livro implements ILivro {
         return this.exemplares.size();
     }
 
-    public int qntReservas() {
-        return qntReservas;
+    public int getQntdReservas() {
+        return this.reservas.size();
     }
 
-    public int adicionarReserva() {
-        return qntReservas++;
+    public void adicionarReserva(Usuario usuario) {
+        reservas.add(usuario);
+        this.notificarObservadores();
     }
 
-    public int removerReserva() {
-        return qntReservas--;
+    public void removerReserva(Usuario usuario) {
+        for (Usuario user : reservas) {
+            if (user.getNome().equals(usuario.getNome())) {
+                reservas.remove(user);
+                break;
+            }
+        }
     }
 
     public int getQntExemplaresDisponiveis() {
         int qnt = 0;
         for (Exemplar exemplar : exemplares) {
-            if (exemplar.getStatus() == "Disponivel") {
+            if (exemplar.getStatus().equals("Disponivel")) {
                 qnt++;
             }
         }
@@ -84,7 +90,7 @@ public class Livro implements ILivro {
 
     public String setExemplarEmprestado() {
         for (Exemplar exemplar : exemplares) {
-            if (exemplar.getStatus() == "Disponivel") {
+            if (exemplar.getStatus().equals("Disponivel")) {
                 exemplar.setExemplarEsprestado();
                 return exemplar.getId();
             }
@@ -134,8 +140,9 @@ public class Livro implements ILivro {
      */
     public void consultarInformacoes() {
         System.out.println("Titulo: " + this.titulo);
-        System.out.println("Quantidade de reservas: " + this.qntReservas);
-        if (this.qntReservas > 0) {
+        System.out.println("Quantidade de reservas: " + this.getQntdReservas());
+
+        if (this.getQntdReservas() > 0) {
             System.out.println("Usuarios que realizaram a reserva: ");
             for (Usuario usuario : reservas) {
                 System.out.println(usuario.getNome());
@@ -150,6 +157,26 @@ public class Livro implements ILivro {
             }
         }
 
+    }
+
+    @Override
+    public void adicionarObservador(IObservador observador) {
+        observadores.add(observador);
+        System.out.println("Observador adicionado");
+    }
+
+    @Override
+    public void removerObservador(IObservador observador) {
+        observadores.remove(observador);
+    }
+
+    @Override
+    public void notificarObservadores() {
+        if (this.getQntdReservas() > 2) {
+            for (IObservador observador : observadores) {
+                observador.notificar("Livro tem mais de duas reservas");
+            }
+        }
     }
 
 }

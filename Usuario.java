@@ -7,12 +7,12 @@ public abstract class Usuario {
     private String id;
     private int tempoEmprestimo;
     private boolean devedor = false;
-    private final int maxEmprestimoLivros = 2;
-    private final List<Emprestimo> livrosEmprestados = new ArrayList<>();
-    private final List<Reserva> livrosReservados = new ArrayList<>();
+    private int maxEmprestimoLivros;
+    private List<Emprestimo> livrosEmprestados = new ArrayList<>();
+    private List<Reserva> livrosReservados = new ArrayList<>();
     private final int qntReservasMaximas = 3;
-    private final List<Reserva> historicoReserva = new ArrayList<>();
-    private final List<Emprestimo> historicoEmprestimo = new ArrayList<>();
+    private List<Reserva> historicoReserva = new ArrayList<>();
+    private List<Emprestimo> historicoEmprestimo = new ArrayList<>();
 
     /* Informações do usuário */
 
@@ -56,14 +56,14 @@ public abstract class Usuario {
             }
 
         }
-        System.out.println("Livros reservados: " +
+        System.out.println("\nLivros reservados: " +
 
                 livrosEmReserva());
         for (Reserva livro : livrosReservados) {
             System.out.println("Titulo: " + livro.getTituloLivro());
             System.out.println("Data da reserva: " + livro.getDataReserva());
         }
-        System.out.println("Historico de emprestimos: ");
+        System.out.println("\nHistorico de emprestimos: ");
         for (Emprestimo emp : historicoEmprestimo) {
             System.out.println("Titulo: " + emp.getExemplar().getTitulo());
             System.out.println("Data do emprestimo: " + emp.getDataEmprestimo());
@@ -74,7 +74,7 @@ public abstract class Usuario {
                 System.out.println("Data de devolução: " + emp.getDataDevolucaoRealizada());
             }
         }
-        System.out.println("Historico de reservas: ");
+        System.out.println("\nHistorico de reservas: ");
         for (Reserva livro : historicoReserva) {
             System.out.println("Titulo: " + livro.getTituloLivro());
             System.out.println("Data da reserva: " + livro.getDataReserva());
@@ -158,6 +158,7 @@ public abstract class Usuario {
         if (livrosEmReserva() < qntReservasMaximas) {
             addReserva((new Reserva(livro.getId(), this.getId())));
             historicoReserva.add(new Reserva(livro.getId(), this.getId()));
+            livro.adicionarReserva(this);
             System.out.println(
                     "Usuario: " + this.nome + " Reserva realizada com sucesso para o livro: " + livro.getTitulo());
         } else {
@@ -195,5 +196,11 @@ public abstract class Usuario {
     public void addReserva(Reserva reserva) {
         livrosReservados.add(reserva);
     }
+
+    public void registrarObservador(Livro livro) {
+        livro.addUsuarioReserva(this);
+    }
+
+    protected abstract void getQntdNotificações();
 
 }
