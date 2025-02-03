@@ -6,4 +6,8 @@ public class Professor extends Usuario {
         emprestimoStrategy = new EmprestimoProfessor();
         observador = new NotificarProfessor();
     }
+
+    public int getTempoEmprestimo() {
+        return tempoEmprestimo;
+    }
 }

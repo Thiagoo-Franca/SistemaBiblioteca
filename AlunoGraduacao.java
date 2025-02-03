@@ -5,4 +5,8 @@ public class AlunoGraduacao extends Usuario {
         emprestimoStrategy = new EmprestimoAlunoGraduacao();
     }
 
+    public int getTempoEmprestimo() {
+        return tempoEmprestimo;
+    }
+
 }

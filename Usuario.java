@@ -11,6 +11,8 @@ public abstract class Usuario {
     private final List<Emprestimo> livrosEmprestados = new ArrayList<>();
     private final List<Reserva> livrosReservados = new ArrayList<>();
     private final int qntReservasMaximas = 3;
+    private final List<Reserva> historicoReserva = new ArrayList<>();
+    private final List<Emprestimo> historicoEmprestimo = new ArrayList<>();
 
     /* Informações do usuário */
 
@@ -61,6 +63,22 @@ public abstract class Usuario {
             System.out.println("Titulo: " + livro.getTituloLivro());
             System.out.println("Data da reserva: " + livro.getDataReserva());
         }
+        System.out.println("Historico de emprestimos: ");
+        for (Emprestimo emp : historicoEmprestimo) {
+            System.out.println("Titulo: " + emp.getExemplar().getTitulo());
+            System.out.println("Data do emprestimo: " + emp.getDataEmprestimo());
+            System.out.println("Status: " + emp.getExemplar().getStatus());
+            if (emp.getExemplar().getStatus().equals("Emprestado")) {
+                System.out.println("Data de entrega: " + emp.getDataDevolucao());
+            } else if (emp.getExemplar().getStatus().equals("Devolvido")) {
+                System.out.println("Data de devolução: " + emp.getDataDevolucaoRealizada());
+            }
+        }
+        System.out.println("Historico de reservas: ");
+        for (Reserva livro : historicoReserva) {
+            System.out.println("Titulo: " + livro.getTituloLivro());
+            System.out.println("Data da reserva: " + livro.getDataReserva());
+        }
 
     };
 
@@ -73,6 +91,9 @@ public abstract class Usuario {
     public void addLivroEmprestado(Exemplar livro) {
         livro.setUsuario(this);
         livrosEmprestados.add(new Emprestimo(livro, this));
+        historicoEmprestimo.add(new Emprestimo(livro, this));
+        cancelarReserva(livro.getLivroId());
+
     }
 
     public int livrosEmprestados() {
@@ -121,11 +142,22 @@ public abstract class Usuario {
         }
     }
 
+    public String realizarDevolucao(Livro livro) {
+        for (Emprestimo emp : livrosEmprestados) {
+            if (emp.getExemplar().getLivroId().equals(livro.getId())) {
+                devolucaoLivro(emp.getExemplar());
+                return "Devolução realizada com sucesso";
+            }
+        }
+        return "Nao há exemplares deste livro emprestados";
+    }
+
     /* Funções sobre Reserva */
 
     public void solicitarReserva(Livro livro) {
         if (livrosEmReserva() < qntReservasMaximas) {
             addReserva((new Reserva(livro.getId(), this.getId())));
+            historicoReserva.add(new Reserva(livro.getId(), this.getId()));
             System.out.println(
                     "Usuario: " + this.nome + " Reserva realizada com sucesso para o livro: " + livro.getTitulo());
         } else {
@@ -134,8 +166,14 @@ public abstract class Usuario {
 
     }
 
-    public void cancelarReserva(Livro livro) {
-        // falta implementar a funcionalidade de cancelar reserva
+    public void cancelarReserva(String idLivro) {
+        for (Reserva l : livrosReservados) {
+            if (l.getIdLivro().equals(idLivro)) {
+                livrosReservados.remove(l);
+                break;
+            }
+        }
+
     }
 
     public boolean reservouLivro(Livro livro) {

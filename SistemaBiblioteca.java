@@ -133,6 +133,13 @@ public class SistemaBiblioteca {
                                 CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
                                 IComando comandoReserva = new ReservarComando();
                                 comandoReserva.executar(carregador);
+                        } else if (comando.equals("dev")) {
+                                String idUsuario = entrada[1];
+                                String idLivro = entrada[2];
+
+                                CarregadorParametros carregador = new CarregadorParametros(idUsuario, idLivro);
+                                IComando comandoDevolucao = new DevolverComando();
+                                comandoDevolucao.executar(carregador);
                         }
 
                 }

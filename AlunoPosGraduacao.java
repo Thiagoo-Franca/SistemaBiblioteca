@@ -4,4 +4,8 @@ public class AlunoPosGraduacao extends Usuario {
     public AlunoPosGraduacao() {
         emprestimoStrategy = new EmprestimoAlunoPos();
     }
+
+    public int getTempoEmprestimo() {
+        return tempoEmprestimo;
+    }
 }

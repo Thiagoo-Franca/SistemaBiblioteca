@@ -5,6 +5,7 @@ public class Emprestimo {
     private Usuario usuario;
     private String dataEmprestimo;
     private String dataDevolucao;
+    private String dataDevolucaoRealizada;
 
     public Emprestimo(Exemplar exemplar, Usuario usuario) {
         this.exemplar = exemplar;
@@ -27,6 +28,14 @@ public class Emprestimo {
 
     public String getDataDevolucao() {
         return dataDevolucao;
+    }
+
+    public String getDataDevolucaoRealizada() {
+        return this.dataDevolucaoRealizada;
+    }
+
+    public void setDataLivroDevolvido() {
+        this.dataDevolucaoRealizada = LocalDate.now().toString();
     }
 
 }

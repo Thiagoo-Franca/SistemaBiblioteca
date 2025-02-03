@@ -8,7 +8,7 @@ public class EmprestimoAlunoPos implements EmprestimoStrategy {
                     if (usuario.reservouLivro(livro) == true) {
                         if (usuario.verificarLivroEmprestimoEmAndamento(livro) == false) {
 
-                            usuario.cancelarReserva(livro);
+                            usuario.cancelarReserva(livro.getId());
 
                             String cod = livro.setExemplarEmprestado();
 
